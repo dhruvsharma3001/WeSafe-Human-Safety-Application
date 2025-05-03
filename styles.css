@@ -1,11 +1,22 @@
+/* Root Variables for Consistency */
+:root {
+    --primary-color: #ff4081;
+    --secondary-color: #ff80ab;
+    --text-dark: #333;
+    --text-light: #555;
+    --bg-light: #f4f4f4;
+    --white: #ffffff;
+}
+
 /* General Styles */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    color: #333;
+    color: var(--text-dark);
     line-height: 1.6;
-    background-color: #f4f4f4;
+    background-color: var(--bg-light);
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 a {
@@ -13,8 +24,7 @@ a {
     color: inherit;
 }
 
-h1,
-h2 {
+h1, h2 {
     margin: 0;
 }
 
@@ -27,7 +37,7 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--white);
     padding: 15px 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -39,12 +49,12 @@ p {
 .navbar .logo {
     font-size: 24px;
     font-weight: 600;
-    color: #ff4081;
+    color: var(--primary-color);
     text-shadow: 2px 2px 2px #eee;
 }
 
 .navbar .logo span {
-    color: #333;
+    color: var(--text-dark);
 }
 
 .nav-links {
@@ -58,14 +68,15 @@ p {
 
 .nav-links a {
     font-size: 16px;
-    color: #333;
+    color: var(--text-dark);
     transition: color 0.3s ease-in-out;
 }
 
 .nav-links a:hover {
-    color: #ff4081;
+    color: var(--primary-color);
 }
 
+/* Button Styles */
 .btn {
     padding: 10px 20px;
     border-radius: 30px;
@@ -73,23 +84,24 @@ p {
     text-transform: uppercase;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .btn-login {
-    background: linear-gradient(45deg, #ff4081, #ff80ab);
-    color: #fff;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
 }
 
 .btn-primary {
-    background: #ff4081;
-    color: white;
-    border: 2px solid #ff4081;
+    background: var(--primary-color);
+    color: var(--white);
+    border: 2px solid var(--primary-color);
 }
 
 .btn-secondary {
-    background: white;
-    color: #ff4081;
-    border: 2px solid #ff4081;
+    background: var(--white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
 }
 
 .btn:hover {
@@ -97,12 +109,18 @@ p {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Focus State for Accessibility */
+a:focus, .btn:focus {
+    outline: 3px dashed var(--primary-color);
+    outline-offset: 4px;
+}
+
 /* Hero Section */
 .hero {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #ff80ab, #ffe6ec);
+    background: linear-gradient(135deg, var(--secondary-color), #ffe6ec);
     height: 100vh;
     text-align: center;
     padding-top: 50px;
@@ -119,103 +137,69 @@ p {
     position: relative;
 }
 
-/* Buttons Above h1 Styling for Anchor Tags */
+/* Buttons Above h1 */
 .hero-top-buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
     position: absolute;
     top: -150px;
-    /* Moves buttons further above the h1 */
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
 }
 
-/* Anchor Tag Styled as Buttons */
+/* Anchor Tag Buttons */
 .hero-top-buttons a {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 125px;
-    /* Adjusted width for the anchor tag */
     height: 125px;
-    /* Adjusted height */
-    background: white;
-    /* Button background color */
-    border: none;
+    background: var(--white);
     border-radius: 50%;
-    /* Circular shape */
     cursor: pointer;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    text-decoration: none;
-    /* Removes default underline */
 }
 
 .hero-top-buttons a:hover {
-    background: #ffffff;
-    /* Light background color on hover */
     transform: translateY(-8px);
-    /* Lift effect */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .hero-top-buttons a:active {
     transform: translateY(0);
-    /* Reset on click */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Images Inside Anchor Tags */
 .button-icon {
     width: 80px;
-    /* Adjusted icon size */
     height: 80px;
     object-fit: contain;
     transition: all 0.3s ease;
 }
 
-/* Hover Effects for Icons */
 .hero-top-buttons a:hover .button-icon {
     transform: scale(1.1);
-    /* Slightly scale the icon */
     filter: brightness(1.2);
-    /* Enhance brightness */
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .hero-top-buttons {
-        gap: 15px;
-        top: -100px;
-        /* Adjusted for smaller screens */
-    }
-
-    .hero-top-buttons a {
-        width: 90px;
-        height: 90px;
-    }
-
-    .button-icon {
-        width: 60px;
-        height: 60px;
-    }
-}
-
+/* Hero Text */
 .hero h1 {
     font-size: 3.5rem;
-    color: #ff4081;
+    color: var(--primary-color);
     margin-bottom: 15px;
     animation: slideInFromLeft 1s ease-in-out;
 }
 
 .hero p {
     font-size: 1.2rem;
-    color: #555;
+    color: var(--text-light);
     animation: slideInFromRight 1s ease-in-out;
 }
 
+/* Hero Buttons */
 .hero-buttons {
     margin-top: 20px;
     animation: fadeIn 2s ease-in-out;
@@ -228,14 +212,14 @@ p {
 /* Features Section */
 .features {
     padding: 60px 20px;
-    background: #fff;
+    background: var(--white);
     text-align: center;
 }
 
 .features h2 {
     font-size: 2.5rem;
     margin-bottom: 10px;
-    color: #333;
+    color: var(--text-dark);
     animation: fadeInDown 1.5s ease-in-out;
 }
 
@@ -245,6 +229,7 @@ p {
     margin-bottom: 30px;
 }
 
+/* Feature Cards */
 .feature-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -266,57 +251,97 @@ p {
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    border-color: #ff4081;
+    border-color: var(--primary-color);
 }
 
 .card h3 {
     margin-bottom: 10px;
-    color: #ff4081;
+    color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero-top-buttons {
+        top: -100px;
+        gap: 15px;
+    }
+
+    .hero-top-buttons a {
+        width: 90px;
+        height: 90px;
+    }
+
+    .button-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .nav-links li {
+        margin: 5px 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-top-buttons a {
+        width: 70px;
+        height: 70px;
+    }
+
+    .button-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .features h2 {
+        font-size: 2rem;
+    }
+
+    .features .section-desc {
+        font-size: 0.9rem;
+    }
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInFromLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(-100%); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
 }

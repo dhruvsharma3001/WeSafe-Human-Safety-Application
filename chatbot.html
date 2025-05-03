@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeSafe : Virtual Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f8f9fa;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            max-height: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-panel {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            height: 100%;
+            padding: 20px;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            border-radius: 15px 0 0 15px;
+            border-right: 1px solid #e0e0e0;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .output {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #f7f9fc, #ffffff);
+            margin-bottom: 20px;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e3e8;
+            color: #495057;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-sizing: border-box;
+            position: relative;
+            background-image: url('DOJ LOGO.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f7f9fc;
+        }
+
+        .output::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            z-index: 1;
+        }
+
+        .output>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .output div {
+            margin-bottom: 15px;
+            padding: 12px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .output .user {
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            align-self: flex-end;
+            margin-left: auto;
+            border: 1px solid #182b7e;
+            color: #ffffff;
+        }
+
+        .output .assistant {
+            background: linear-gradient(145deg, #6c757d, #5a6268);
+            color: #ffffff;
+            border: 1px solid #5a6268;
+        }
+
+        .input-panel {
+            display: flex;
+            align-items: center;
+            padding-top: 10px;
+        }
+
+        textarea {
+            flex: 1;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1px solid #ced4da;
+            margin-right: 10px;
+            font-size: 16px;
+            background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+            color: #495057;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            resize: none;
+            height: 50px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 20px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            color: #ffffff;
+            border: 1px solid #0056b3;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #0056b3, #004494);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 87, 179, 0.5);
+        }
+
+        .options-box {
+            display: flex;
+            flex-direction: column;
+            width: 20%;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            border-left: 1px solid #e0e0e0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        body:not(.dark-mode) .options-box button {
+            background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+            border-color: #b0b0b0;
+            color: #495057;
+        }
+
+        .options-box button {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            color: #495057;
+            border: 1px solid #ced4da;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .options-box button:hover {
+            background: linear-gradient(145deg, #e9ecef, #f1f3f5);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .container {
+            background: #1e1e1e;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode .chat-panel {
+            background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
+            border-right: 1px solid #333;
+        }
+
+        body.dark-mode .output .user {
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            border: 1px solid #0056b3;
+            color: #ffffff;
+        }
+
+        body.dark-mode .output .assistant {
+            background: linear-gradient(145deg, #4a4a4a, #2c2c2c);
+            border: 1px solid #4a4a4a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .options-box {
+            background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+            border-left: 1px solid #333;
+        }
+
+        body.dark-mode .options-box button {
+            background: linear-gradient(145deg, #333, #444);
+            border-color: #333;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="chat-panel">
+            <div id="output" class="output"></div>
+            <div class="input-panel">
+                <textarea id="user-input" placeholder="Type your message..."></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <div class="options-box">
+            <button onclick="activateVoice()">🎤 Voice</button>
+            <button onclick="searchWebsite()">🔍 Web Search</button>
+            <button onclick="toggleTheme()">🌗 Toggle Theme</button>
+        </div>
+    </div>
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('user-input').value;
+            if (input.trim() !== "") {
+                addMessage(input, "user");
+                document.getElementById('user-input').value = '';
+                processResponse(input);
+            }
+        }
+
+        function addMessage(text, sender) {
+            const message = { text, sender };
+            displayMessage(message);
+        }
+
+        function displayMessage({ text, sender }) {
+            const output = document.getElementById('output');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = text;
+            messageElement.className = sender;
+            output.appendChild(messageElement);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function processResponse(input) {
+            const response = `Response to "${input}"`;
+            setTimeout(() => addMessage(response, "assistant"), 1000);
+        }
+
+        function activateVoice() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                addMessage(transcript, "user");
+                processResponse(transcript);
+            };
+            recognition.onerror = (event) => {
+                console.error("Voice recognition error:", event.error);
+            };
+            recognition.start();
+        }
+
+        function searchWebsite() {
+            const input = document.getElementById('user-input').value;
+            if (input.trim() !== "") {
+                const searchURL = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+                window.open(searchURL, '_blank');
+            }
+        }
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+        }
+
+        window.onload = function () {
+            loadConversations();
+            if (conversations.length > 0) {
+                currentConversation = conversations[conversations.length - 1];
+                showConversation(currentConversation);
+            }
+        };
+
+    </script>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeSafe : Virtual Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url(chatbot_bg.avif);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            max-height: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            border: 1px solid black;
+        }
+
+        .chat-panel {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            height: 100%;
+            padding: 20px;
+            background: linear-gradient(145deg, #ffffff, #ffffff);
+            border-radius: 15px 0 0 15px;
+            border-right: 1px solid #ffffff;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .output {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #ffc4c4, #ffc0c0);
+            margin-bottom: 20px;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #000000;
+            color: #495057;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-sizing: border-box;
+            position: relative;
+            background-image: url(chatbot_img.avif);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #ffffff;
+        }
+
+        .output>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .output div {
+            margin-bottom: 15px;
+            padding: 12px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            font-weight: 500;
+            overflow-wrap: break-word;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .output .user {
+            background: linear-gradient(145deg, #00ffff, #00ff15);
+            align-self: flex-end;
+            margin-left: auto;
+            border: 1px solid #182b7e;
+            color: #000000;
+        }
+
+        .output .assistant {
+            background: linear-gradient(145deg, #33ff00, #00ffff);
+            color: #000000;
+            border: 1px solid #5a6268;
+        }
+
+        .input-panel {
+            display: flex;
+            align-items: center;
+            padding-top: 10px;
+        }
+
+        textarea {
+            flex: 1;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1px solid #000000;
+            margin-right: 10px;
+            font-size: 16px;
+            background: linear-gradient(145deg, #ffeeee, #c0c0c0);
+            color: #495057;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            resize: none;
+            height: 50px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 20px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            color: #ffffff;
+            border: 1px solid #000000;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background: linear-gradient(145deg, #0056b3, #004494);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 87, 179, 0.5);
+        }
+
+        .options-box {
+            display: flex;
+            flex-direction: column;
+            width: 20%;
+            background: linear-gradient(145deg, #ffeeee, #ffacac);
+            border-left: 1px solid #000000;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        body:not(.dark-mode) .options-box button {
+            background: linear-gradient(145deg, #d0d0d0, #b0b0b0);
+            border-color: #b0b0b0;
+            color: #495057;
+        }
+
+        .options-box button {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #0080ff, #0b64bd);
+            color: #0080ff;
+            border: 1px solid #000000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .options-box button:hover {
+            background: linear-gradient(145deg, #e9ecef, #f1f3f5);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .container {
+            background: #1e1e1e;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode .chat-panel {
+            background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
+            border-right: 1px solid #333;
+        }
+
+        body.dark-mode .output .user {
+            background: linear-gradient(145deg, #007bff, #0056b3);
+            border: 1px solid #0056b3;
+            color: #ffffff;
+        }
+
+        body.dark-mode .output .assistant {
+            background: linear-gradient(145deg, #4a4a4a, #2c2c2c);
+            border: 1px solid #4a4a4a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .options-box {
+            background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+            border-left: 1px solid #333;
+        }
+
+        body.dark-mode .options-box button {
+            background: linear-gradient(145deg, #333, #444);
+            border-color: #333;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="chat-panel">
+            <div id="output" class="output"></div>
+            <div class="input-panel">
+                <textarea id="user-input" placeholder="Type your message..."></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <div class="options-box">
+            <button onclick="activateVoice()">🎤 Voice</button>
+            <button onclick="searchWebsite()">🔍 Web Search</button>
+            <button onclick="toggleTheme()">🌗 Toggle Theme</button>
+        </div>
+    </div>
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('user-input').value;
+            if (input.trim() !== "") {
+                addMessage(input, "user");
+                document.getElementById('user-input').value = '';
+                processResponse(input);
+            }
+        }
+
+        function addMessage(text, sender) {
+            const message = { text, sender };
+            displayMessage(message);
+        }
+
+        function displayMessage({ text, sender }) {
+            const output = document.getElementById('output');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = text;
+            messageElement.className = sender;
+            output.appendChild(messageElement);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function processResponse(input) {
+            const response = `Response to "${input}"`;
+            setTimeout(() => addMessage(response, "assistant"), 1000);
+        }
+
+        function activateVoice() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                addMessage(transcript, "user");
+                processResponse(transcript);
+            };
+            recognition.onerror = (event) => {
+                console.error("Voice recognition error:", event.error);
+            };
+            recognition.start();
+        }
+
+        function searchWebsite() {
+            const input = document.getElementById('user-input').value;
+            if (input.trim() !== "") {
+                const searchURL = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+                window.open(searchURL, '_blank');
+            }
+        }
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        let darkMode = false;
+
+        function toggleTheme() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+        }
+
+        window.onload = function () {
+            loadConversations();
+            if (conversations.length > 0) {
+                currentConversation = conversations[conversations.length - 1];
+                showConversation(currentConversation);
+            }
+        };
+
+    </script>
+</body>
+</html>

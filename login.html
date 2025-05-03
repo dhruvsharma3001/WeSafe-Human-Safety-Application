@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #7f8c8d;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url(bg1.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .login-container h2 {
+            color: #3498db;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .login-form input:focus {
+            border-color: #e74c3c;
+        }
+
+        .login-form button {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .login-form button:hover {
+            background-color: #27ae60;
+        }
+
+        .magic-text {
+            font-size: 14px;
+            color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>LOGIN</h2>
+        <form class="login-form" onsubmit="return false;">
+            <input type="tel" id="mobileNumber" placeholder="Your Mobile Number" required>
+            <input type="password" id="password" placeholder="Your Password" required>
+            <button onclick="login()">Login</button>
+        </form>
+        <p class="magic-text">Enter your details to continue!</p>
+    </div>
+
+    <script>
+        function login() {
+            var mobileNumberInput = document.getElementById('mobileNumber');
+            var passwordInput = document.getElementById('password');
+            var uniqueIdInput = document.getElementById('uniqueId');
+
+            var mobileNumber = mobileNumberInput.value;
+            var password = passwordInput.value;
+            var uniqueId = uniqueIdInput.value;
+
+            simulateVerification(uniqueId, function(isValid) {
+                if (isValid && mobileNumber === '1234567890' && password === 'password') {
+                    alert('🎉 Login successful! Welcome to the Magic World! 🎉');
+                } else {
+                    alert('🚫 Invalid mobile number, password, or unique ID. Please try again. 🚫');
+                }
+            });
+        }
+
+        function validateNumericInput(input, maxLength) {
+            input.value = input.value.replace(/\D/g, '');
+            if (input.value.length > maxLength) {
+                input.value = input.value.slice(0, maxLength);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Now!</title>
+    <style>
+        body {
+            background-image: url(bg1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .profile-container,
+        .login-container,
+        .signup-container {
+            text-decoration: none;
+            color: inherit;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 20px;
+            text-align: center;
+            display: none;
+            transition: transform 0.2s;
+            overflow: hidden;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .profile-container:hover,
+        .login-container:hover,
+        .signup-container:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .profile-body {
+            padding: 20px;
+        }
+
+        .profile-info {
+            margin-bottom: 15px;
+        }
+
+        .profile-info label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            color: #333;
+            margin: 0;
+        }
+
+        .profile-footer {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        h2 {
+            color: #3498db;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: black underline;
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .container>* {
+            margin: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="profileContainer" class="profile-container">
+            <div class="profile-header">
+                <h2>User Profile</h2>
+            </div>
+            <div class="profile-body">
+                <div class="profile-info">
+                    <label>Email:</label>
+                    <p id="email">user@example.com</p>
+                </div>
+                <div class="profile-info">
+                    <label>Address:</label>
+                    <p id="address">123 Main Street, Cityville</p>
+                </div>
+                <div class="profile-info">
+                    <label>Mobile:</label>
+                    <p id="mobile">(555) 123-4567</p>
+                </div>
+                <div class="profile-info">
+                    <label>Unique ID:</label>
+                    <p id="uniqueIdDisplay">123456789</p>
+                </div>
+            </div>
+            <div class="profile-footer">
+                <p>Welcome! Feel free to connect and share your story.</p>
+            </div>
+        </div>
+
+        <a href="login.html" class="login-container">
+            <h2>Login</h2>
+            <p>Login to continue</p>
+        </a>
+
+        <a href="signup.html" class="signup-container">
+            <h2>Sign Up</h2>
+            <p>Don't have an account? Sign up</p>
+        </a>
+    </div>
+
+    <script>
+        const isLoggedIn = false; 
+
+        if (isLoggedIn) {
+            document.getElementById('profileContainer').style.display = 'block';
+
+            const userData = {
+                userName: "John Doe",
+                email: "john.doe@example.com",
+                address: "456 Oak Street, Townsville",
+                mobile: "(555) 987-6543",
+                uniqueId: "123456789"
+            };
+
+            document.getElementById('email').innerText = userData.email;
+            document.getElementById('address').innerText = userData.address;
+            document.getElementById('mobile').innerText = userData.mobile;
+            document.getElementById('uniqueIdDisplay').innerText = userData.uniqueId;
+        } else {
+            document.querySelectorAll('.login-container, .signup-container').forEach(container => {
+                container.style.display = 'block';
+            });
+        }
+    </script>
+</body>
+
+</html>
